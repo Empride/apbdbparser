@@ -18,16 +18,13 @@ import java.util.List;
 
 public class BaseView extends Application{
     public static Controller controller;
-    public List<Item> itemList;
+    public List<Item> itemList=new ArrayList<>();
+    private ObservableList<Item> leftItemList=FXCollections.observableArrayList();;
+    private ObservableList<Item> rightItemList=FXCollections.observableArrayList();;
     public ListView<Item> leftPane;
     public ListView<Item> rightPane;
     public TextField leftFilter;
     public TextField rightFilter;
-    public Stage compareStage;
-
-
-
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -37,29 +34,31 @@ public class BaseView extends Application{
         primaryStage.show();
     }
 
-    public void setController(Controller controller) {
+    public static void setController(Controller controller) {
         BaseView.controller = controller;
     }
 
     public void eventLeftFilter() {
-        if (itemList == null || itemList.isEmpty())
-            return;
+
         String searchString = leftFilter.getText();
-        List<Item> filteredList = filterList(searchString);
-        leftPane.setItems(FXCollections.observableList(filteredList));
+        leftItemList.clear();
+        leftItemList.addAll(filterList(searchString));
+
+
     }
 
 
     public void eventRightFilter() {
-        if (itemList == null || itemList.isEmpty())
-            return;
+
         String searchString = rightFilter.getText();
-        List<Item> filteredList = filterList(searchString);
-        rightPane.setItems(FXCollections.observableList(filteredList));
+        rightItemList.clear();
+        rightItemList.addAll(filterList(searchString));
     }
 
     private List<Item> filterList(String searchString) {
-        List<Item> filteredList = new ArrayList<Item>();
+        List<Item> filteredList = new ArrayList<>();
+        if (searchString.isEmpty())
+            return itemList;
         for (Item item : itemList) {
             if (item.toString().toLowerCase().contains(searchString.toLowerCase()))
                 filteredList.add(item);
@@ -72,12 +71,12 @@ public class BaseView extends Application{
     }
 
 
-
-
     public void eventLoadData() {
         itemList = controller.loadData();
-        rightPane.setItems(FXCollections.observableList(itemList));
-        leftPane.setItems(FXCollections.observableList(itemList));
+        leftItemList.addAll(itemList);
+        rightItemList.addAll(itemList);
+        rightPane.setItems(rightItemList);
+        leftPane.setItems(leftItemList);
         eventLeftFilter();
         eventRightFilter();
     }
