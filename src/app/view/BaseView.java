@@ -93,6 +93,7 @@ public class BaseView extends Application{
         ObservableList<String> observableList=FXCollections.observableArrayList();
         observableList.add(item1.getName());
         observableList.add(String.format("%.2f", item1.getTimeToKill()));
+
         weapon1List.setItems(observableList);
     }
 
