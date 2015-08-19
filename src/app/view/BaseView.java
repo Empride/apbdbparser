@@ -25,10 +25,6 @@ public class BaseView extends Application{
     public TextField rightFilter;
     public Stage compareStage;
 
-    public ListView<String> weapon1List;
-    public ListView<String> weapon2List;
-    public ListView<String> diffList;
-    public ListView<String> textList;
 
 
 
@@ -75,27 +71,8 @@ public class BaseView extends Application{
         controller.compareSelected(leftPane.getFocusModel().getFocusedItem(), rightPane.getFocusModel().getFocusedItem());
     }
 
-    public void createCompareWindow() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("compareWindow.fxml"));
-        Parent rootCompare = null;
-        try {
-            rootCompare = (Parent) fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        compareStage = new Stage();
-        compareStage.setTitle("ApbDB weapon compare");
-        compareStage.setScene(new Scene(rootCompare));
-        compareStage.show();
-    }
 
-    public void populateCompareWindow(Item item1, Item item2) {
-        ObservableList<String> observableList=FXCollections.observableArrayList();
-        observableList.add(item1.getName());
-        observableList.add(String.format("%.2f", item1.getTimeToKill()));
 
-        weapon1List.setItems(observableList);
-    }
 
     public void eventLoadData() {
         itemList = controller.loadData();

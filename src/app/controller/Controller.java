@@ -3,6 +3,8 @@ package app.controller;
 import app.model.Item;
 import app.model.Model;
 import app.view.BaseView;
+import app.view.CompareView;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -12,6 +14,11 @@ import java.util.List;
 public class Controller {
     BaseView view;
     Model model;
+    CompareView compareView;
+
+    public void setCompareView(CompareView compareView) {
+        this.compareView = compareView;
+    }
 
     public void setView(BaseView view) {
         this.view = view;
@@ -21,11 +28,10 @@ public class Controller {
     public void compareSelected(Item item1, Item item2) {
         if (item1 == null || item2 == null)
             return;
-        if (view.compareStage != null)
-            view.compareStage.close();
-        view.createCompareWindow();
-        view.populateCompareWindow(item1,item2);
-
+        if (compareView.stage != null)
+            compareView.stage.close();
+            compareView.start(new Stage());
+            compareView.populateCompareWindow(item1,item2);
 
     }
 
