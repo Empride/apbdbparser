@@ -1,0 +1,1047 @@
+<!doctype html>
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>Item Filter - APB:Db</title>
+    <link rel="stylesheet" href="/static/css/foundation.min.css">
+    <link rel="stylesheet" href="/static/css/app.css?v=04172013">
+</head>
+<body>
+<div class="row">
+    <div class="six columns header">
+        <h1>Item Filter - All Points Bulletin</h1>
+        <a href="/"> <img src="/static/img/logo-normal.png" id="logo" width="384" height="120" alt="APB:Db Logo"> </a>
+    </div>
+</div>
+<div class="row">
+    <div class="twelve columns">
+        <nav class="top-bar fixed contain-to-grid">
+            <section>
+                <ul class="left">
+                    <li class="has-dropdown"> <a href="/items/">Items</a>
+                        <ul class="dropdown">
+                            <li><a href="/items/ammo/">Ammunition</a></li>
+                            <li><a href="/items/?cat=Capacity">Capacity</a></li>
+                            <li><a href="/items/?cat=UsableToken">Consumable</a></li>
+                            <li><a href="/items/?cat=Clothing">Clothing</a></li>
+                            <li><a href="/items/?cat=Dummy">Dummy</a></li>
+                            <li><a href="/items/?cat=Equipment">Equipment</a></li>
+                            <li><a href="/items/?cat=FnMod">Modifications</a></li>
+                            <li><a href="/items/?cat=Instrument">Instruments</a></li>
+                            <li><a href="/items/?cat=RewardPackage">Packages</a></li>
+                            <li><a href="/items/?cat=Song">Songs</a></li>
+                            <li><a href="/items/?cat=Symbol">Symbols</a></li>
+                            <li><a href="/items/?cat=Theme">Themes</a></li>
+                            <li><a href="/items/?cat=Unlock">Unlocks</a></li>
+                            <li><a href="/items/?cat=Vehicle">Vehicles</a></li>
+                            <li><a href="/items/?cat=Weapon">Weapons</a></li>
+                        </ul> </li>
+                </ul>
+                <ul class="left">
+                    <li class="has-dropdown"> <a href="#">Progression</a>
+                        <ul class="dropdown">
+                            <li><a href="/achievements/">Achievements</a></li>
+                            <li><a href="/contacts/">Contacts</a></li>
+                            <li><a href="/threat/">Rating Levels</a></li>
+                            <li><a href="/roles/">Roles</a></li>
+                        </ul> </li>
+                </ul>
+                <ul class="left">
+                    <li class="has-dropdown"> <a href="#">San Paro</a>
+                        <ul class="dropdown">
+                            <li><a href="/districts/">Districts</a></li>
+                            <li><a href="/factions/">Factions</a></li>
+                            <li><a href="/organisations/">Organisations</a></li>
+                        </ul> </li>
+                </ul>
+                <ul class="left">
+                    <li class="has-dropdown"> <a href="#">Missions</a>
+                        <ul class="dropdown">
+                            <li><a href="/missions/activities/">Activities</a></li>
+                            <li><a href="/missions/names/">Missions</a></li>
+                            <li><a href="/missions/medals/">Medals</a></li>
+                            <li><a href="/missions/scoring/">Scoring</a></li>
+                        </ul> </li>
+                </ul>
+                <ul class="right">
+                    <form action="/search/" method="GET">
+                        <div class="column">
+                            <li class="username"> <input type="text" placeholder="Search" name="q"> </li>
+                        </div>
+                        <div class="column">
+                            <li class="has-button"> <input type="submit" class="small button" value="Search"> </li>
+                        </div>
+                    </form>
+                </ul>
+            </section>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="twelve columns">
+        <ul class="breadcrumbs">
+            <li><a href="/">APB:Db</a></li>
+            <li class="unavailable"><a href="#">Items</a></li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="twelve columns">
+        <div class="content">
+            <div class="row">
+                <form id="item_form">
+                    <div class="three columns">
+                        <label>Category</label>
+                        <select id="cat" name="cat"> <option value="None">None</option> <option value="Capacity">Capacity</option> <option value="Clothing">Clothing</option> <option value="Dummy">Dummy</option> <option value="Equipment">Equipment Upgrades</option> <option value="FnMod">Modifications</option> <option value="Instrument">Instruments</option> <option value="Outfit">Outfits</option> <option value="RewardPackage">Package</option> <option value="Song">Songs</option> <option value="Symbol">Symbols</option> <option value="Theme">Themes</option> <option value="Unlock">Unlocks</option> <option value="UsableToken">Consumable Items</option> <option value="Vehicle">Vehicles</option> <option selected value="Weapon">Weapons</option> </select>
+                    </div>
+                    <div class="three columns">
+                        <label>Subcategory</label>
+                        <select id="subcat" name="subcat"> <option value="">None</option> <option value="WeaponGrenade">Grenades</option> <option value="WeaponPrimary">Primary Weapons</option> <option value="WeaponSecondary">Secondary Weapons</option> </select>
+                    </div>
+                    <div class="three columns end">
+                        <label>Infracategory</label>
+                        <select disabled id="infracat" name="infracat"> <option value="">None</option> </select>
+                    </div>
+                </form>
+            </div>
+            <!--
+       <div class="row">
+           <div class="three columns">
+               <label>Faction</label>
+               <select id="factionselect">
+                   <option value=""></option>
+
+                       <option value="Criminal">Criminal</option>
+
+                       <option value="Enforcer">Enforcer</option>
+
+               </select>
+           </div>
+       </div>
+       -->
+            <hr>
+            <div class="row">
+                <div class="twelve columns">
+                    <table class="table-full table-sort table-hover">
+                        <thead class="tfoot">
+                        <tr>
+                            <td colspan="6">
+                                <div class="row">
+                                    <div class="four columns offset-by-eight">
+                                        <ul class="pagination">
+                                            <li class="arrow"><a href="/items/?cat=Weapon&amp;p=2">Next »</a></li>
+                                        </ul>
+                                    </div>
+                                </div> </td>
+                        </tr>
+                        </thead>
+                        <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th data-sort="string-nocase">Item</th>
+                            <th data-sort="string-nocase">Category</th>
+                            <th data-sort="int">Cost</th>
+                            <th class="col-small" data-sort="int">Rating</th>
+                            <th>Faction</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Explosive_AAEPD/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_explosive_aaped_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Explosive_AAEPD/">AAEPD</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Explosive_AAEPD_Slot3_ArmasJB/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_explosive_aaped_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Explosive_AAEPD_Slot3_ArmasJB/">AAEPD "Volcano JC"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ACT44/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_act44.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ACT44/">ACT 44</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3376">$3,376</td>
+                            <td class="col-small">1</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ACT44_PR1/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_act44.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ACT44_PR1/">ACT 44 "Executioner 4Four"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="9376">$9,376</td>
+                            <td class="col-small">20</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ACT44-LS_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_act44-ls.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ACT44-LS_Joker/">ACT 44 "Last Stand"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3500">$3,500 / J500</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ACT44-LS_PR1_RT/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_act44_laststand_purple.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ACT44-LS_PR1_RT/">ACT 44 "Last Stand"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ACT44_FN1_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_act44.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ACT44_FN1_Armas/">ACT 44 "Pillager"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ACT44-GM_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_act44-gm.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ACT44-GM_Joker/">ACT 44 GM JT1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4750">$4,750 / J500</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ACT44-GM_PR1a_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_act44_gm_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ACT44-GM_PR1a_Armas/">ACT 44 GM PR1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ACT44-GM_PR1b_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_act44_gm_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ACT44-GM_PR1b_Armas/">ACT 44 GM PR2</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_ACES/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_aces.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_ACES/">Agrotech ACES</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_ACES_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_aces.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_ACES_Joker/">Agrotech ACES JT1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3750">$3,750 / J700</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_ACES_Slot1_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_aces.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_ACES_Slot1_Joker/">Agrotech ACES JT2</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4750">$4,750 / J1,000</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_ACES_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_aces_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_ACES_Slot3_Armas/">Agrotech ACES R&amp;D III</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_ACES-Rifle/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_aces-rifle.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_ACES-Rifle/">Agrotech ACES Rifle</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_ACES-Rifle_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_aces-rifle.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_ACES-Rifle_Joker/">Agrotech ACES Rifle JT1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3750">$3,750 / J700</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_ACES-Rifle_Slot1_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_aces-rifle.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_ACES-Rifle_Slot1_Joker/">Agrotech ACES Rifle JT2</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4750">$4,750 / J1,000</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_ACES-Rifle_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_aces-rifle_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_ACES-Rifle_Slot3_Armas/">Agrotech ACES Rifle R&amp;D III</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SniperRifle_DMR-AV_PR1_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_sniperrifle_dmr.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SniperRifle_DMR-AV_PR1_Joker/">Agrotech DMR-AV JT1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4500">$4,500 / J700</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SniperRifle_DMR-AV_PR1/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_sniperrifle_dmr.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SniperRifle_DMR-AV_PR1/">Agrotech DMR-AV PR1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3450">$3,450</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SniperRifle_DMR-AV_PR2/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_sniperrifle_dmr.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SniperRifle_DMR-AV_PR2/">Agrotech DMR-AV PR2</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3450">$3,450</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SniperRifle_DMR/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_sniperrifle_dmr.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SniperRifle_DMR/">Agrotech DMR-SD</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3450">$3,450</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SniperRifle_DMR_Perm/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_sniperrifle_dmr.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SniperRifle_DMR_Perm/">Agrotech DMR-SD</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3450">$3,450</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762/">ALIG 762</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3676">$3,676</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762_Perm/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762_Perm/">ALIG 762</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3676">$3,676</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762_PR1/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762_PR1/">ALIG 762 "Commando 76Two R1"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="7950">$7,950</td>
+                            <td class="col-small">20</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762_PR2/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762_PR2/">ALIG 762 "Commando 76Two R2"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="12600">$12,600</td>
+                            <td class="col-small">30</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762_PR3/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762_PR3/">ALIG 762 "Commando 76Two R3"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="18750">$18,750</td>
+                            <td class="col-small">30</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762_PR4/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762_PR4/">ALIG 762 "Commando 76Two R4"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="24000">$24,000</td>
+                            <td class="col-small">85</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762_PR3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762_PR3_Armas/">ALIG 762 "Surefire"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762_Slot1/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762_Slot1/">ALIG 762 R&amp;D I</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="12600">$12,600</td>
+                            <td class="col-small">20</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762_Slot2/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762_Slot2/">ALIG 762 R&amp;D II</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="18750">$18,750</td>
+                            <td class="col-small">30</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762_Slot3/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762_Slot3/">ALIG 762 R&amp;D III</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="24000">$24,000</td>
+                            <td class="col-small">40</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_LMG_ALIG762_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_lightmachinegun_alig762.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_LMG_ALIG762_Slot3_Armas/">ALIG 762 R&amp;D III</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="24000">$24,000</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_ATAC/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_atac_default.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_ATAC/">ATAC 424</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="10000">$10,000</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_ATAC_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_atac_default.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_ATAC_Joker/">ATAC 424</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3600">$3,600 / J700</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_ATAC-Bodyguard_PR2_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_atac_bodyguard_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_ATAC-Bodyguard_PR2_Armas/">ATAC 424 "Bodyguard"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="19500">$19,500</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_ATAC-Mercenary_PR2_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_atac_mercenary_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_ATAC-Mercenary_PR2_Armas/">ATAC 424 "Mercenary"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="20750">$20,750</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_ATAC_Armas_Preset_FN1/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_atac_default.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_ATAC_Armas_Preset_FN1/">ATAC 424 "Patroller"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_ATAC-Watchman_PR3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_atac_watchman_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_ATAC-Watchman_PR3_Armas/">ATAC 424 "Watchman"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="28750">$28,750</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_ATAC_Slot1_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_atac_default.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_ATAC_Slot1_Joker/">ATAC 424 JT1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="7500">$7,500 / J1,000</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_ATAC_Slot1_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_atac_default.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_ATAC_Slot1_Armas/">ATAC 424 NFCP 1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4500">$4,500</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_ATAC_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_atac_default_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_ATAC_Slot3_Armas/">ATAC 424 NFCP 3</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="32500">$32,500</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_CAP40/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_cap40_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_CAP40/">CAP40</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_CBMP-Tactical_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_cbmp_tactical_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_CBMP-Tactical_Slot3_Armas/">CBMP-45 'Arrow'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_CBMP_Tactical/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_cbmp_tactical.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_CBMP_Tactical/">CBMP-45 'Arrow'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_CBMP-Compact_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_cbmp_compact_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_CBMP-Compact_Slot3_Armas/">CBMP-45 'Bolt'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_CBMP_Compact/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_cbmp_compact.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_CBMP_Compact/">CBMP-45 'Bolt'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_CBMP_Base/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_cbmp_base.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_CBMP_Base/">CBMP-45 'Dart'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_CBMP_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_cbmp_base.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_CBMP_Joker/">CBMP-45 'Dart'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3600">$3,600 / J700</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_CBMP_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_cbmp_base_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_CBMP_Slot3_Armas/">CBMP-45 'Dart'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_CBMP_Slot3_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_cbmp_base.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_CBMP_Slot3_Joker/">CBMP-45 'Dart' JT3</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4500">$4,500 / J1,000</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_COBR-A/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_cobra_base.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_COBR-A/">COBR-A</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_COBR-A_Scoped_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_cobra_scoped_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_COBR-A_Scoped_Slot3_Armas/">COBR-A "Adder"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_COBR-A_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_cobra_base.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_COBR-A_Joker/">COBR-A "Venom"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3600">$3,600 / J700</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_COBR-A_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_cobra_base_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_COBR-A_Slot3_Armas/">COBR-A "Venom"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_COBR-A_Slot3_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_cobra_base.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_COBR-A_Slot3_Joker/">COBR-A "Venom" JT3</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4500">$4,500 / J1,000</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_AssaultRifle_COBR-A_Scoped/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_assaultrifle_cobra_scoped.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_AssaultRifle_COBR-A_Scoped/">COBR-A Scoped</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_Colby45AP/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_colbyclassic.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_Colby45AP/">Colby .45 AP</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_Colby45AP_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_colbyclassic.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_Colby45AP_Armas/">Colby .45 AP</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_Colby45AP_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_colbyclassic.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_Colby45AP_Joker/">Colby .45 AP</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4100">$4,100 / J700</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ColbyCommander/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_colbycommander_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ColbyCommander/">Colby Classic</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ColbyCommander_PR1_ArmasJB/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_colbycommander_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ColbyCommander_PR1_ArmasJB/">Colby Commander</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_ColbyCommander_PR1_NoTrade/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_colbycommander_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_ColbyCommander_PR1_NoTrade/">Colby Commander</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Shotgun_CSG_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_shotgun_csg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Shotgun_CSG_Joker/">Colby CSG-20</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3600">$3,600 / J700</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Shotgun_CSG_PR1_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_shotgun_csg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Shotgun_CSG_PR1_Joker/">Colby CSG-20 JT1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4500">$4,500 / J1,000</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Shotgun_CSG_Slot1_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_shotgun_csg_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Shotgun_CSG_Slot1_Armas/">Colby CSG-20 Mk2</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Shotgun_CSG_PR1_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_shotgun_csg_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Shotgun_CSG_PR1_Armas/">Colby CSG-20 PR1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Shotgun_CSG_PR2_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_shotgun_csg_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Shotgun_CSG_PR2_Armas/">Colby CSG-20 PR2</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Shotgun_CSG_PR1_RT/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_shotgun_csg_purple.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Shotgun_CSG_PR1_RT/">Colby CSG-20 RT1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_TommyGun/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_tommygun.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_TommyGun/">Colby M-1922</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_TommyGun_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_tommygun.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_TommyGun_Joker/">Colby M-1922</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3600">$3,600 / J700</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_TommyGun_PR2_Valentines/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_tommygun_pink.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_TommyGun_PR2_Valentines/">Colby M-1922 'Big Chopper'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_TommyGun_PR1_Valentines/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_tommygun_pink.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_TommyGun_PR1_Valentines/">Colby M-1922 'Chopper'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_TommyGun_PR2_ArmasJB/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_tommygun_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_TommyGun_PR2_ArmasJB/">Colby M-1922 'Hazardous'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_TommyGun_PR2_RUSJB/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_tommygun_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_TommyGun_PR2_RUSJB/">Colby M-1922 'Hazardous'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_TommyGun_Slot3_USA_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_tommygun_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_TommyGun_Slot3_USA_Armas/">Colby M-1922 'Uncle Sam'</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="23364">$23,364</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_TommyGun_PR1_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_tommygun.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_TommyGun_PR1_Joker/">Colby M-1922 JT1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4500">$4,500 / J1,000</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_TommyGun_Slot2/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_tommygun.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_TommyGun_Slot2/">Colby M-1922 Mk2</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="13500">$13,500</td>
+                            <td class="col-small">195</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_TommyGun_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_tommygun_gold.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_TommyGun_Slot3_Armas/">Colby M-1922 Mk3</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG/">Colby PMG 28</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="2926">$2,926</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG_Perm/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG_Perm/">Colby PMG 28</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="2926">$2,926</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG_PR1/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG_PR1/">Colby PMG 28: TROJAN X-I</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="7426">$7,426</td>
+                            <td class="col-small">20</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG_PR2/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG_PR2/">Colby PMG 28: TROJAN X-II</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="11926">$11,926</td>
+                            <td class="col-small">30</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG_PR3/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG_PR3/">Colby PMG 28: TROJAN X-III</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="17926">$17,926</td>
+                            <td class="col-small">30</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG_PR4/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG_PR4/">Colby PMG 28: TROJAN X-IV</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="22426">$22,426</td>
+                            <td class="col-small">85</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG_Slot1/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG_Slot1/">Colby PMG Mk 2</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="11926">$11,926</td>
+                            <td class="col-small">20</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG_Slot2/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG_Slot2/">Colby PMG Mk 3</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="17926">$17,926</td>
+                            <td class="col-small">30</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG_Slot3/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG_Slot3/">Colby PMG Mk 4</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="22426">$22,426</td>
+                            <td class="col-small">30</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG_Slot3_Armas/">Colby PMG Mk 4</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="22426">$22,426</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG-SD_Slot1_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg-sd.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG-SD_Slot1_Joker/">Colby PMG-SD 28 'Hush' JT1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="3600">$3,600 / J700</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG-SD_Slot2_Joker/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg-sd.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG-SD_Slot2_Joker/">Colby PMG-SD 28 'Hush' JT2</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4500">$4,500 / J1,000</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG-SD_Slot1/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg-sd.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG-SD_Slot1/">Colby PMG-SD 28 'Hush' X-I</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG-SD_Slot2/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg-sd.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG-SD_Slot2/">Colby PMG-SD 28 'Hush' X-II</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG-SD_Slot3_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg-sd.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG-SD_Slot3_Armas/">Colby PMG-SD 28 'Hush' X-III</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG-SD_PR1_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg-sd.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG-SD_PR1_Armas/">Colby PMG-SD 28 'Murmur' PR1</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_SMG_PMG-SD_PR2_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_smg_pmg-sd.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_SMG_PMG-SD_PR2_Armas/">Colby PMG-SD 28 'Murmur' PR2</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_RSA/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_rsa.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_RSA/">Colby RSA</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4126">$4,126</td>
+                            <td class="col-small">1</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_RSA_PR1_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_rsa.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_RSA_PR1_Armas/">Colby RSA "Hunter"</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="4126">$4,126</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        <tr>
+                            <td class="icon_32 icon_bg_dark"> <a href="/items/Weapon_Pistol_RSA_PR1a_Armas/"> <img src="/static/img/game/apbmenus_art_weapons/small/icon_pistol_rsa.png" width="32" height="32" alt="Item Icon"> </a> </td>
+                            <td><a href="/items/Weapon_Pistol_RSA_PR1a_Armas/">Colby RSA: PROMETHEUS</a></td>
+                            <td>Weapons</td>
+                            <td data-sort-value="0">$0</td>
+                            <td class="col-small">0</td>
+                            <td class="col-small icon_bg_dark text-center"> <img src="/static/img/game/custom/tiny/enforcer.png" alt="Enforcer Icon" title="Enforcer" width="16" height="16"> <img src="/static/img/game/custom/tiny/criminal.png" alt="Criminal Icon" title="Criminal" width="16" height="16"> </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <div class="row">
+                                    <div class="four columns offset-by-eight">
+                                        <ul class="pagination">
+                                            <li class="arrow"><a href="/items/?cat=Weapon&amp;p=2">Next »</a></li>
+                                        </ul>
+                                    </div>
+                                </div> </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<div class="row footer">
+    <div class="eight columns centered">
+        <div class="twenty-percent float-left">
+            <h5>Items</h5>
+            <ul>
+                <li><a href="/items/ammo/">Ammunition</a></li>
+                <li><a href="/items/?cat=Capacity">Capacity</a></li>
+                <li><a href="/items/?cat=UsableToken">Consumable</a></li>
+                <li><a href="/items/?cat=Clothing">Clothing</a></li>
+                <li><a href="/items/?cat=Dummy">Dummy</a></li>
+                <li><a href="/items/?cat=Equipment">Equipment</a></li>
+                <li><a href="/items/?cat=Instrument">Instruments</a></li>
+                <li><a href="/items/?cat=FnMod">Modifications</a></li>
+                <li><a href="/items/?cat=RewardPackage">Packages</a></li>
+                <li><a href="/items/?cat=Song">Songs</a></li>
+                <li><a href="/items/?cat=Symbol">Symbols</a></li>
+                <li><a href="/items/?cat=Theme">Themes</a></li>
+                <li><a href="/items/?cat=Unlock">Unlocks</a></li>
+                <li><a href="/items/?cat=Vehicle">Vehicles</a></li>
+                <li><a href="/items/?cat=Weapon">Weapons</a></li>
+            </ul>
+        </div>
+        <div class="twenty-percent float-left">
+            <h5>Progression</h5>
+            <ul>
+                <li><a href="/achievements/">Achievements</a></li>
+                <li><a href="/contacts/">Contacts</a></li>
+                <li><a href="/threat/">Rating Levels</a></li>
+                <li><a href="/roles/">Roles</a></li>
+            </ul>
+        </div>
+        <div class="twenty-percent float-left">
+            <h5>San Paro</h5>
+            <ul>
+                <li><a href="/districts/">Districts</a></li>
+                <li><a href="/factions/">Factions</a></li>
+                <li><a href="/organisations/">Organisations</a></li>
+            </ul>
+        </div>
+        <div class="twenty-percent float-left">
+            <h5>Missions</h5>
+            <ul>
+                <li><a href="/missions/activities/">Activities</a></li>
+                <li><a href="/missions/names/">Missions</a></li>
+                <li><a href="/missions/medals/">Medals</a></li>
+                <li><a href="/missions/scoring/">Scoring</a></li>
+            </ul>
+        </div>
+        <div class="twenty-percent float-left">
+            <h5>APB:Db</h5>
+            <ul>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/track/">Admin Tracker</a></li>
+                <li><a href="/changes/">Changes</a></li>
+                <li><a href="/status/">Server Status</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="/static/js/foundation.min.js"></script>
+<script src="/static/js/app.js?v=6"></script>
+<script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-25146697-1']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+</body>
+</html>

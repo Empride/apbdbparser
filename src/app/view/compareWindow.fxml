@@ -6,17 +6,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.CompareViewController">
    <children>
-      <ScrollPane prefViewportHeight="400.0" prefViewportWidth="600.0">
-         <content>
-            <AnchorPane>
-               <children>
-                  <ListView fx:id="textList" focusTraversable="false" layoutX="450.0" prefHeight="400.0" prefWidth="150.0" />
-                  <ListView fx:id="weapon1List" focusTraversable="false" layoutX="150.0" prefHeight="400.0" prefWidth="150.0" />
-                  <ListView fx:id="weapon2List" focusTraversable="false" layoutX="300.0" prefHeight="400.0" prefWidth="150.0" />
-                  <ListView fx:id="diffList" focusTraversable="false" prefHeight="400.0" prefWidth="150.0" />
-               </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
+      <TableView fx:id="compareTable" prefHeight="400.0" prefWidth="602.0">
+        <columns>
+          <TableColumn fx:id="columnText" editable="false" prefWidth="150.0" sortable="false" text="Stat" />
+          <TableColumn fx:id="columnItem1" editable="false" prefWidth="150.0" sortable="false" text="wpn1" />
+            <TableColumn fx:id="columnItem2" editable="false" prefWidth="150.0" sortable="false" text="wpn2" />
+            <TableColumn fx:id="columnDiff" editable="false" prefWidth="150.0" sortable="false" text="Difference" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

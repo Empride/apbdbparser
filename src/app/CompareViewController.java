@@ -1,52 +1,52 @@
 package app;
 
 import app.model.Item;
-import javafx.application.Application;
+import app.model.ItemsMerger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by User on 20.08.2015.
  */
-public class CompareViewController extends Application {
+public class CompareViewController {
 
-    public ListView<String> weapon1List;
-    public ListView<String> weapon2List;
-    public ListView<String> diffList;
-    public ListView<String> textList;
-    public Stage compareStage;
-    public Item itemToCompare1;
-    public Item itemToCompare2;
-    public Scene scene;
+    public static Stage compareStage;
+    private Item itemToCompare1;
+    private Item itemToCompare2;
+    @FXML
+    private TableColumn<ItemsMerger.MergedData, String> columnText;
+    @FXML
+    private TableColumn<ItemsMerger.MergedData, String> columnItem1;
+    @FXML
+    private TableColumn<ItemsMerger.MergedData, String> columnItem2;
+    @FXML
+    private TableColumn<ItemsMerger.MergedData, String> columnDiff;
+    @FXML
+    private TableView<ItemsMerger.MergedData> compareTable;
 
-
-    public void start(Stage primaryStage) throws IOException {
-
-        Parent rootCompare = FXMLLoader.load(getClass().getResource("view/compareWindow.fxml"));
-        compareStage = new Stage();
-        compareStage.resizableProperty().setValue(false);
-        compareStage.setTitle("ApbDB weapon compare");
-        scene=new Scene(rootCompare);
-        compareStage.setScene(scene);
-        compareStage.show();
-        populateCompareWindow();
+    public static void setCompareStage(Stage stage) {
+        compareStage = stage;
     }
 
     public void populateCompareWindow() {
-        List<String> firstList = new ArrayList<>();
-        firstList.add(itemToCompare1.getName());
-        firstList.add(String.format("%.2f", itemToCompare1.getTimeToKill()));
-        ObservableList<String> observableList = FXCollections.observableList(firstList);
-        weapon1List.setItems(observableList);
+        List<ItemsMerger.MergedData> mergedItemsList= new ItemsMerger(itemToCompare1,itemToCompare2);
+        ObservableList<ItemsMerger.MergedData> observableList = FXCollections.observableList(mergedItemsList);
+
+        columnItem1.setText(itemToCompare1.toString());
+        columnItem2.setText(itemToCompare2.toString());
+        columnText.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData,String>("firstColumn"));
+        columnItem1.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData,String>("secondColumn"));
+        columnItem2.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData, String>("thirdColumn"));
+        columnDiff.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData, String>("forthColumn"));
+        compareTable.setItems(observableList);
     }
 
     public void setItemToCompare1(Item itemToCompare1) {
