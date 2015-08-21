@@ -1,7 +1,7 @@
 package app;
 
-import app.model.Item;
-import app.model.ItemsMerger;
+import app.items.Item;
+import app.items.ItemsMerger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,7 +10,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,10 +41,10 @@ public class CompareViewController {
 
         columnItem1.setText(itemToCompare1.toString());
         columnItem2.setText(itemToCompare2.toString());
-        columnText.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData,String>("firstColumn"));
-        columnItem1.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData,String>("secondColumn"));
-        columnItem2.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData, String>("thirdColumn"));
-        columnDiff.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData, String>("forthColumn"));
+        columnText.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData,String>("statNameColumn"));
+        columnItem1.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData,String>("firstItemColumn"));
+        columnItem2.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData, String>("secondItemColumn"));
+        columnDiff.setCellValueFactory(new PropertyValueFactory<ItemsMerger.MergedData, String>("differenceColumn"));
         compareTable.setItems(observableList);
     }
 

@@ -1,6 +1,7 @@
 package app.model;
 
 import app.MainViewController;
+import app.items.Item;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
