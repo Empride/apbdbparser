@@ -1,15 +1,19 @@
 package app;
 
 import app.model.BaseModel;
+import app.model.DBParser;
 import app.model.Item;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -17,16 +21,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.ExecutionException;
 
 public class MainViewController extends Application {
-    private static BaseModel model;
-    public CompareViewController compareViewController = new CompareViewController();
 
+    public CompareViewController compareViewController = new CompareViewController();
+    public List<Item> itemList = new ArrayList<>();
+    public ProgressBar progressBar;
+    private static BaseModel model;
+    public Label label1;
     private Stage mainStage;
-    public ObservableList<Item> itemList = FXCollections.observableArrayList();
     @FXML
     private ListView<Item> leftPane;
     @FXML
@@ -40,20 +44,20 @@ public class MainViewController extends Application {
 
 
     public static void main(String... args) {
-        model = BaseModel.getInstance();
+        model=new BaseModel();
+
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        model.setMainViewController(this);
+
         Parent root = FXMLLoader.load(getClass().getResource("view/mainWindow.fxml"));
         mainStage = primaryStage;
         primaryStage.resizableProperty().setValue(false);
         primaryStage.setTitle("ApbDB weapon compare");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
 
     }
 
@@ -92,11 +96,10 @@ public class MainViewController extends Application {
 
 
     public void eventLoadData() {
-        model.getData();
+        model.getModelData(this);
     }
 
     public void updateItemList(List<Item> modelData) {
-
         itemList.clear();
         itemList.addAll(modelData);
         updateData();

@@ -14,8 +14,8 @@
             <Button fx:id="loadDataButton" layoutX="14.0" layoutY="344.0" mnemonicParsing="false" onAction="#eventLoadData" prefHeight="42.0" prefWidth="106.0" text="parse apbDB" />
             <TextField fx:id="leftFilter" layoutX="14.0" layoutY="14.0" onKeyReleased="#eventLeftFilter" prefHeight="42.0" prefWidth="219.0" />
             <TextField fx:id="rightFilter" layoutX="367.0" layoutY="14.0" onKeyReleased="#eventRightFilter" prefHeight="42.0" prefWidth="219.0" />
-            <ProgressBar layoutX="124.0" layoutY="365.0" prefHeight="18.0" prefWidth="444.0" progress="0.0" />
-            <Label layoutX="124.0" layoutY="344.0" prefHeight="17.0" prefWidth="444.0" textOverrun="CLIP" />
+            <ProgressBar fx:id="progressBar" focusTraversable="false" layoutX="124.0" layoutY="365.0" prefHeight="18.0" prefWidth="444.0" progress="0.0" />
+            <Label fx:id="label1" layoutX="124.0" layoutY="344.0" prefHeight="17.0" prefWidth="444.0" textOverrun="CLIP" />
          </children>
       </Pane>
    </children>
