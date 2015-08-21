@@ -67,7 +67,7 @@ public class MainViewController extends Application implements Initializable{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("view/mainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../view/mainWindow.fxml"));
         mainStage = primaryStage;
         primaryStage.resizableProperty().setValue(false);
         primaryStage.setTitle("ApbDB weapon compare");
@@ -100,12 +100,12 @@ public class MainViewController extends Application implements Initializable{
     }
 
     public void eventOnCompareClick() throws IOException {
-        Item item1 = leftPane.getFocusModel().getFocusedItem();
-        Item item2 = rightPane.getFocusModel().getFocusedItem();
+        Item item1 = leftPane.getSelectionModel().getSelectedItem();
+        Item item2 = rightPane.getSelectionModel().getSelectedItem();
         if (item1 == null || item2 == null)
             return;
-        if (compareViewController.compareStage != null)
-            compareViewController.compareStage.close();
+        if (CompareViewController.compareStage != null)
+            CompareViewController.compareStage.close();
         createCompareStage(item1, item2);
     }
 
@@ -123,6 +123,8 @@ public class MainViewController extends Application implements Initializable{
     }
 
     private void updateData() {
+        leftPane.getSelectionModel().select(-1);
+        rightPane.getSelectionModel().select(-1);
         loadDataButton.setDisable(false);
         loadDataButton.setDefaultButton(false);
         compareButton.setDefaultButton(true);
@@ -140,7 +142,7 @@ public class MainViewController extends Application implements Initializable{
 
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("view/compareWindow.fxml"));
+        loader.setLocation(getClass().getResource("../view/compareWindow.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
         if (CompareViewController.compareStage != null)
             CompareViewController.compareStage.close();

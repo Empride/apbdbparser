@@ -58,6 +58,7 @@ public class CompareViewController {
         linkItem2.setText(itemToCompare2.toString());
 
 
+
         setUrlHandlerToColumnHeader(linkItem1, itemToCompare1);
         setUrlHandlerToColumnHeader(linkItem2, itemToCompare2);
 

@@ -20,15 +20,14 @@ public class Item {
     private String url;
     private ItemEnum itemType;
 
-    public ItemEnum getItemType() {
-        return itemType;
+    public Item(String name, String url, ItemEnum itemType) {
+        this.name = name;
+        this.itemType = itemType;
+        this.url = APBDB_ITEM_URL + url;
     }
 
-
-    public Item(String name, String url,ItemEnum itemType) {
-        this.name = name;
-        this.itemType=itemType;
-        this.url = APBDB_ITEM_URL + url;
+    public ItemEnum getItemType() {
+        return itemType;
     }
 
     @Override
@@ -45,21 +44,39 @@ public class Item {
         statMap.put(pair.getKey(), pair.getValue());
     }
 
-
+    //moving measurements from value to key
     public Pair<String, Double> moveMeasurementFromValueToKey(String key, String value) {
         value = value.replaceAll(",", "");
+        //Explosives max damage to usual damage
+        switch (key) {
+            case "Max Health Damage":
+                key = "Health Damage";
+                break;
+            case "Max Stamina Damage":
+                key = "Stamina Damage";
+                break;
+            case "Max Hard Damage":
+                key = "Hard Damage";
+                break;
+        }
         if (value.contains("("))
             value = value.substring(value.indexOf("(") + 1, value.length() - 1);
-        if (key.equalsIgnoreCase("Drive Type"))
-        {
-            return new Pair<String, Double>("Drive Type", (double) (value.equalsIgnoreCase("FWD")?0.20:value.equalsIgnoreCase("AWD")?0.22:0.02));
+        //Car Drive type to double
+        if (key.equalsIgnoreCase("Drive Type")) {
+            return new Pair<String, Double>("Drive Type", (double) (value.equalsIgnoreCase("FWD") ? 0.20 : value.equalsIgnoreCase("AWD") ? 0.22 : 0.02));
         }
-        String measurementCut = value.replaceAll("[ 0-9\\.]*", "");
-        String valueCut = value.replaceAll("[a-zA-Z/%]", "");
-        double valueFormatted = 0;
+
+        String measurementCut = value.replaceAll("[x 0-9\\.]*", "");
+        String valueCut = value.replaceAll("[^x 0-9\\.]*", "");
+
+        double valueFormatted;
         if (measurementCut.trim().length() > 0 && !measurementCut.equals("%"))
             key = key + ", " + measurementCut;
-        valueFormatted = Double.parseDouble(valueCut);
+        //Shotgun damage=pellets*damagePerOnePellet
+        if (valueCut.contains("x")) {
+            valueFormatted = Double.parseDouble(valueCut.split("x")[0]) * Double.parseDouble(valueCut.split("x")[1]);
+        } else
+            valueFormatted = Double.parseDouble(valueCut);
         return new Pair<String, Double>(key, valueFormatted);
     }
 
