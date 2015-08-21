@@ -1,7 +1,8 @@
 package app.model;
 
-import app.MainViewController;
+import app.controllers.MainViewController;
 import app.items.Item;
+import app.items.ItemEnum;
 import javafx.application.Platform;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -17,8 +18,8 @@ import java.util.List;
  * Created by User on 21.08.2015.
  */
 public class DBParser {
-    private static boolean isDataCached = false;
-    private static DBParser parser = new DBParser();
+
+    private static final DBParser INSTANCE = new DBParser();
     private boolean hasNext = true;
     private List<Item> modelData = new ArrayList<>();
 
@@ -26,21 +27,23 @@ public class DBParser {
     }
 
     public static DBParser getInstance() {
-        return parser;
+        return INSTANCE;
     }
 
-    public List<Item> parseWeaponList(String apbdbCatalogUrl, final MainViewController mainViewController) {
-        if (isDataCached)
-            return modelData;
+    public List<Item> parseItemList(ItemEnum itemEnum, final MainViewController mainViewController) {
+        modelData.clear();
+        hasNext=true;
+
+        mainViewController.progressBar.setProgress(0);
         int i = 0;
         while (hasNext)
             try {
-                Document document = getDocument(apbdbCatalogUrl, ++i);
+                Document document = getDocument(itemEnum.getUrl(), ++i);
                 hasNext = document.getElementsByClass("arrow").text().contains("Next");
                 Element elementsByTag = document.getElementsByTag("tbody").get(0);
                 Elements rows = elementsByTag.getElementsByTag("tr");
                 for (Element element : rows) {
-                    modelData.add(new Item(element.getElementsByTag("a").get(1).text(), element.getElementsByTag("a").get(0).attr("href")));
+                    modelData.add(new Item(element.getElementsByTag("a").get(1).text(), element.getElementsByTag("a").get(0).attr("href"),itemEnum));
                 }
                 final double finalI = i;
                 Platform.runLater(new Runnable() {
@@ -53,14 +56,16 @@ public class DBParser {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        isDataCached = true;
         return modelData;
     }
 
-    public void parseWeaponData(Item item) {
+    public void parseItemData(Item item) {
         try {
+            int tablesCount=6;
+            if (item.getItemType()==ItemEnum.VEHICLE)
+                tablesCount=2;
             Document document = getDocument(item.getUrl());
-            for (int i = 1; i <= 6; i++) {
+            for (int i = 1; i <= tablesCount; i++) {
                 Element elementsByTag = document.getElementsByTag("tbody").get(i);
                 Elements rows = elementsByTag.getElementsByTag("tr");
                 for (Element element : rows) {

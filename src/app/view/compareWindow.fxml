@@ -4,13 +4,19 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.CompareViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CompareViewController">
    <children>
       <TableView fx:id="compareTable" prefHeight="400.0" prefWidth="500.0">
         <columns>
           <TableColumn fx:id="columnText" editable="false" prefWidth="200.0" sortable="false" text="Stat" />
-          <TableColumn fx:id="columnItem1" editable="false" prefWidth="100.0" sortable="false" text="wpn1" />
-            <TableColumn fx:id="columnItem2" editable="false" prefWidth="100.0" sortable="false" text="wpn2" />
+          <TableColumn fx:id="columnItem1" editable="false" prefWidth="100.0" sortable="false">
+               <graphic>
+                  <Hyperlink fx:id="linkItem1" alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="Hyperlink" underline="true" />
+               </graphic></TableColumn>
+            <TableColumn fx:id="columnItem2" editable="false" prefWidth="100.0" sortable="false">
+               <graphic>
+                  <Hyperlink fx:id="linkItem2" alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="Hyperlink" underline="true" />
+               </graphic></TableColumn>
             <TableColumn fx:id="columnDiff" editable="false" prefWidth="100.0" sortable="false" text="Difference" />
         </columns>
       </TableView>

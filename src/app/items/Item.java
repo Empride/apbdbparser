@@ -18,10 +18,16 @@ public class Item {
 
     private String name;
     private String url;
+    private ItemEnum itemType;
+
+    public ItemEnum getItemType() {
+        return itemType;
+    }
 
 
-    public Item(String name, String url) {
+    public Item(String name, String url,ItemEnum itemType) {
         this.name = name;
+        this.itemType=itemType;
         this.url = APBDB_ITEM_URL + url;
     }
 
@@ -44,14 +50,16 @@ public class Item {
         value = value.replaceAll(",", "");
         if (value.contains("("))
             value = value.substring(value.indexOf("(") + 1, value.length() - 1);
-
+        if (key.equalsIgnoreCase("Drive Type"))
+        {
+            return new Pair<String, Double>("Drive Type", (double) (value.equalsIgnoreCase("FWD")?0.20:value.equalsIgnoreCase("AWD")?0.22:0.02));
+        }
         String measurementCut = value.replaceAll("[ 0-9\\.]*", "");
         String valueCut = value.replaceAll("[a-zA-Z/%]", "");
-
+        double valueFormatted = 0;
         if (measurementCut.trim().length() > 0 && !measurementCut.equals("%"))
             key = key + ", " + measurementCut;
-        double valueFormatted = Double.parseDouble(valueCut);
-
+        valueFormatted = Double.parseDouble(valueCut);
         return new Pair<String, Double>(key, valueFormatted);
     }
 

@@ -4,18 +4,19 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.MainViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.MainViewController">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
          <children>
             <ListView fx:id="leftPane" focusTraversable="false" layoutX="14.0" layoutY="52.0" prefHeight="281.0" prefWidth="219.0" />
             <ListView fx:id="rightPane" focusTraversable="false" layoutX="367.0" layoutY="52.0" prefHeight="281.0" prefWidth="219.0" />
-            <Button fx:id="compareButton" layoutX="260.0" layoutY="172.0" mnemonicParsing="false" onAction="#eventOnCompareClick" prefHeight="42.0" prefWidth="81.0" text="Compare" />
-            <Button fx:id="loadDataButton" layoutX="14.0" layoutY="344.0" mnemonicParsing="false" onAction="#eventLoadData" prefHeight="42.0" prefWidth="106.0" text="parse apbDB" />
+            <Button fx:id="compareButton" layoutX="242.0" layoutY="278.0" mnemonicParsing="false" onAction="#eventOnCompareClick" prefHeight="42.0" prefWidth="120.0" text="Compare" />
+            <Button fx:id="loadDataButton" layoutX="242.0" layoutY="220.0" mnemonicParsing="false" onAction="#eventOnLoadDataClick" prefHeight="42.0" prefWidth="120.0" text="parse apbDB" />
             <TextField fx:id="leftFilter" layoutX="14.0" layoutY="14.0" onKeyReleased="#eventLeftFilter" prefHeight="42.0" prefWidth="219.0" />
             <TextField fx:id="rightFilter" layoutX="367.0" layoutY="14.0" onKeyReleased="#eventRightFilter" prefHeight="42.0" prefWidth="219.0" />
-            <ProgressBar fx:id="progressBar" focusTraversable="false" layoutX="124.0" layoutY="365.0" prefHeight="18.0" prefWidth="444.0" progress="0.0" />
-            <Label fx:id="label1" layoutX="124.0" layoutY="344.0" prefHeight="17.0" prefWidth="444.0" textOverrun="CLIP" />
+            <ProgressBar fx:id="progressBar" focusTraversable="false" layoutX="14.0" layoutY="367.0" prefHeight="18.0" prefWidth="576.0" progress="0.0" />
+            <Label fx:id="label1" layoutX="14.0" layoutY="350.0" prefHeight="17.0" prefWidth="576.0" textOverrun="CLIP" />
+            <ChoiceBox fx:id="choiceBox" focusTraversable="false" layoutX="242.0" layoutY="180.0" prefHeight="25.0" prefWidth="120.0" />
          </children>
       </Pane>
    </children>

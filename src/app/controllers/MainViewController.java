@@ -1,5 +1,6 @@
-package app;
+package app.controllers;
 
+import app.items.ItemEnum;
 import app.model.BaseModel;
 import app.items.Item;
 import javafx.application.Application;
@@ -7,27 +8,37 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class MainViewController extends Application {
+public class MainViewController extends Application implements Initializable{
 
     public CompareViewController compareViewController = new CompareViewController();
     public List<Item> itemList = new ArrayList<>();
-    public ProgressBar progressBar;
     private static BaseModel model;
-    public Label label1;
     private Stage mainStage;
+    private ObservableList<Item> leftItemList = FXCollections.observableArrayList();
+    private ObservableList<Item> rightItemList = FXCollections.observableArrayList();
+    @FXML
+    public ProgressBar progressBar;
+    @FXML
+    public Label label1;
+    @FXML
+    private Button loadDataButton;
+    @FXML
+    private Button compareButton;
+    @FXML
+    private ChoiceBox<ItemEnum> choiceBox;
     @FXML
     private ListView<Item> leftPane;
     @FXML
@@ -36,13 +47,20 @@ public class MainViewController extends Application {
     private TextField leftFilter;
     @FXML
     private TextField rightFilter;
-    private ObservableList<Item> leftItemList = FXCollections.observableArrayList();
-    private ObservableList<Item> rightItemList = FXCollections.observableArrayList();
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        choiceBox.setItems(FXCollections.observableArrayList(ItemEnum.values()));
+        choiceBox.getSelectionModel().select(0);
+        loadDataButton.setDefaultButton(true);
+        compareButton.setDisable(true);
+    }
+
 
 
     public static void main(String... args) {
         model=new BaseModel();
-
         launch(args);
     }
 
@@ -92,23 +110,30 @@ public class MainViewController extends Application {
     }
 
 
-    public void eventLoadData() {
-        model.getModelData(this);
+    public void eventOnLoadDataClick() {
+        loadDataButton.setDisable(true);
+        model.getModelData(this,choiceBox.getSelectionModel().getSelectedItem());
     }
 
     public void updateItemList(List<Item> modelData) {
         itemList.clear();
         itemList.addAll(modelData);
         updateData();
+
     }
 
     private void updateData() {
+        loadDataButton.setDisable(false);
+        loadDataButton.setDefaultButton(false);
+        compareButton.setDefaultButton(true);
+        compareButton.setDisable(false);
         leftItemList.addAll(itemList);
         rightItemList.addAll(itemList);
         rightPane.setItems(rightItemList);
         leftPane.setItems(leftItemList);
         eventLeftFilter();
         eventRightFilter();
+
     }
 
     public void createCompareStage(Item item1, Item item2) throws IOException {
