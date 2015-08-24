@@ -1,6 +1,6 @@
 package app.model;
 
-import app.controllers.MainViewController;
+import app.controllers.MainApp;
 import app.items.Item;
 import app.items.ItemEnum;
 import javafx.application.Platform;
@@ -19,13 +19,17 @@ public class BaseModel implements Model, Runnable {
     private boolean suspendThread = true;
     private ItemEnum choosenItemType;
     private DBParser dbParser = DBParser.getInstance();
-    private MainViewController mainViewController;
+    private MainApp mainApp;
     private Map<String, List<Item>> dataCache = new HashMap<>();
 
-
-    public void getModelData(MainViewController mainViewController, ItemEnum enumName) {
+    /**
+     * Starting new thread, or resumed old to upload data from DB
+     * @param mainApp FX controller instance, whose method will be called with uploaded data param
+     * @param enumName items enum
+     */
+    public void requestDataUpdate(MainApp mainApp, ItemEnum enumName) {
         choosenItemType =enumName;
-        this.mainViewController = mainViewController;
+        this.mainApp = mainApp;
         if (thread == null) {
             thread = new Thread(this);
             thread.setDaemon(true);
@@ -49,14 +53,14 @@ public class BaseModel implements Model, Runnable {
             suspendThread = true;
             if (!dataCache.containsKey(choosenItemType.toString())) {
                 List<Item> dataLoaded= new ArrayList<>();
-                dataLoaded.addAll(dbParser.parseItemList(choosenItemType, mainViewController));
+                dataLoaded.addAll(dbParser.parseItemList(choosenItemType, mainApp));
                 dataCache.put(choosenItemType.toString(), dataLoaded);
             }
             Platform.runLater(new Runnable() {
                                   @Override
                                   public void run() {
-                                      mainViewController.label1.setText("All data loaded");
-                                      mainViewController.updateItemList(dataCache.get(choosenItemType.toString()));
+                                      mainApp.label1.setText("All data loaded");
+                                      mainApp.updateItemList(dataCache.get(choosenItemType.toString()));
                                   }
                               }
             );

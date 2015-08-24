@@ -21,11 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MainViewController extends Application implements Initializable{
 
-    public CompareViewController compareViewController = new CompareViewController();
+/**
+ *Main app, mainWindow controller
+ * */
+public class MainApp extends Application implements Initializable{
+
     public List<Item> itemList = new ArrayList<>();
-    private static BaseModel model=new BaseModel();
+    private BaseModel model;
     private Stage mainStage;
     private ObservableList<Item> leftItemList = FXCollections.observableArrayList();
     private ObservableList<Item> rightItemList = FXCollections.observableArrayList();
@@ -48,19 +51,21 @@ public class MainViewController extends Application implements Initializable{
     @FXML
     private TextField rightFilter;
 
-
+    /**
+     *initialization, including setting model
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         choiceBox.setItems(FXCollections.observableArrayList(ItemEnum.values()));
         choiceBox.getSelectionModel().select(0);
         loadDataButton.setDefaultButton(true);
         compareButton.setDisable(true);
+        this.model = new BaseModel();
     }
 
 
 
     public static void main(String... args) {
-
         launch(args);
     }
 
@@ -75,13 +80,17 @@ public class MainViewController extends Application implements Initializable{
         primaryStage.show();
 
     }
-
+    /**
+    *left pane filter
+    * */
     public void eventLeftFilter() {
         String searchString = leftFilter.getText();
         leftItemList.clear();
         leftItemList.addAll(filterList(searchString));
     }
-
+    /**
+     *right pane filter
+     * */
     public void eventRightFilter() {
         String searchString = rightFilter.getText();
         rightItemList.clear();
@@ -98,7 +107,9 @@ public class MainViewController extends Application implements Initializable{
         }
         return filteredList;
     }
-
+    /**
+     *launching compare window, if already open - closing it first
+     * */
     public void eventOnCompareClick() throws IOException {
         Item item1 = leftPane.getSelectionModel().getSelectedItem();
         Item item2 = rightPane.getSelectionModel().getSelectedItem();
@@ -112,14 +123,15 @@ public class MainViewController extends Application implements Initializable{
 
     public void eventOnLoadDataClick() {
         loadDataButton.setDisable(true);
-        model.getModelData(this,choiceBox.getSelectionModel().getSelectedItem());
+        model.requestDataUpdate(this, choiceBox.getSelectionModel().getSelectedItem());
     }
-
+    /**
+     *Method for runLater call from model
+     * */
     public void updateItemList(List<Item> modelData) {
         itemList.clear();
         itemList.addAll(modelData);
         updateData();
-
     }
 
     private void updateData() {
@@ -139,10 +151,7 @@ public class MainViewController extends Application implements Initializable{
     }
 
     public void createCompareStage(Item item1, Item item2) throws IOException {
-
-
         FXMLLoader loader = new FXMLLoader();
-
         loader.setLocation(getClass().getClassLoader().getResource(("compareWindow.fxml")));
         AnchorPane page = (AnchorPane) loader.load();
         if (CompareViewController.compareStage != null)
@@ -154,7 +163,6 @@ public class MainViewController extends Application implements Initializable{
         Scene scene = new Scene(page);
         compareStage.setScene(scene);
         CompareViewController.setCompareStage(compareStage);
-
         CompareViewController controller = loader.getController();
         controller.setItemToCompare1(item1);
         controller.setItemToCompare2(item2);

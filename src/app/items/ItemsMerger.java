@@ -7,7 +7,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * Created by User on 20.08.2015.
+ * Object, that merges to items' stats into table-ready view with difference calculated
+ * like this: was
+ * Item1.stat1=a1,Item1.stat2=b1
+ * Item2.stat1=a2,Item2.stat2=b2,
+ * became
+ * stat1, a1, b1, a1-b1
+ * stat2, a2, b2, a2-b2
  */
 public class ItemsMerger extends ArrayList<ItemsMerger.MergedData> {
     Item item1;
@@ -16,6 +22,7 @@ public class ItemsMerger extends ArrayList<ItemsMerger.MergedData> {
     DBParser dbParser = DBParser.getInstance();
 
     public ItemsMerger(Item item1, Item item2) {
+        //if items' stats was already parsed from DB - use cached data
         if (!item1.isAlreadyParsed())
             dbParser.parseItemData(item1);
         if (!item2.isAlreadyParsed())
@@ -26,8 +33,6 @@ public class ItemsMerger extends ArrayList<ItemsMerger.MergedData> {
     }
 
     private void merge() {
-
-
         for (Map.Entry<String, Double> item1stat : item1.getStatMap().entrySet()) {
             if (item2.getStatMap().containsKey(item1stat.getKey())) {
                 double item2Value = item2.getStatMap().get(item1stat.getKey());
