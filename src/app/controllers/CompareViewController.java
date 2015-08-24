@@ -72,9 +72,7 @@ public class CompareViewController {
                 if (Desktop.isDesktopSupported()) {
                     try {
                         Desktop.getDesktop().browse(new URI(item.getUrl()));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (URISyntaxException e) {
+                    } catch (IOException | URISyntaxException e) {
                         e.printStackTrace();
                     }
                 }

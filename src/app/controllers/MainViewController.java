@@ -25,7 +25,7 @@ public class MainViewController extends Application implements Initializable{
 
     public CompareViewController compareViewController = new CompareViewController();
     public List<Item> itemList = new ArrayList<>();
-    private static BaseModel model;
+    private static BaseModel model=new BaseModel();
     private Stage mainStage;
     private ObservableList<Item> leftItemList = FXCollections.observableArrayList();
     private ObservableList<Item> rightItemList = FXCollections.observableArrayList();
@@ -60,14 +60,14 @@ public class MainViewController extends Application implements Initializable{
 
 
     public static void main(String... args) {
-        model=new BaseModel();
+
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("../view/mainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(("mainWindow.fxml")));
         mainStage = primaryStage;
         primaryStage.resizableProperty().setValue(false);
         primaryStage.setTitle("ApbDB weapon compare");
@@ -142,7 +142,8 @@ public class MainViewController extends Application implements Initializable{
 
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../view/compareWindow.fxml"));
+
+        loader.setLocation(getClass().getClassLoader().getResource(("compareWindow.fxml")));
         AnchorPane page = (AnchorPane) loader.load();
         if (CompareViewController.compareStage != null)
             CompareViewController.compareStage.close();

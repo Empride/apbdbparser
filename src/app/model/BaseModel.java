@@ -48,14 +48,14 @@ public class BaseModel implements Model, Runnable {
         while (true) {
             suspendThread = true;
             if (!dataCache.containsKey(choosenItemType.toString())) {
-                List<Item> dataLoaded=new ArrayList<Item>();
+                List<Item> dataLoaded= new ArrayList<>();
                 dataLoaded.addAll(dbParser.parseItemList(choosenItemType, mainViewController));
                 dataCache.put(choosenItemType.toString(), dataLoaded);
             }
             Platform.runLater(new Runnable() {
                                   @Override
                                   public void run() {
-                                      mainViewController.label1.setText(String.format("All data loaded"));
+                                      mainViewController.label1.setText("All data loaded");
                                       mainViewController.updateItemList(dataCache.get(choosenItemType.toString()));
                                   }
                               }

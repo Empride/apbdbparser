@@ -2,11 +2,10 @@ package app.items;
 
 import javafx.util.Pair;
 
-import java.util.HashMap;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 /**
  * Created by User on 19.08.2015.
@@ -63,7 +62,7 @@ public class Item {
             value = value.substring(value.indexOf("(") + 1, value.length() - 1);
         //Car Drive type to double
         if (key.equalsIgnoreCase("Drive Type")) {
-            return new Pair<String, Double>("Drive Type", (double) (value.equalsIgnoreCase("FWD") ? 0.20 : value.equalsIgnoreCase("AWD") ? 0.22 : 0.02));
+            return new Pair<>("Drive Type", value.equalsIgnoreCase("FWD") ? 0.20 : value.equalsIgnoreCase("AWD") ? 0.22 : 0.02);
         }
 
         String measurementCut = value.replaceAll("[x 0-9\\.]*", "");
@@ -77,7 +76,7 @@ public class Item {
             valueFormatted = Double.parseDouble(valueCut.split("x")[0]) * Double.parseDouble(valueCut.split("x")[1]);
         } else
             valueFormatted = Double.parseDouble(valueCut);
-        return new Pair<String, Double>(key, valueFormatted);
+        return new Pair<>(key, valueFormatted);
     }
 
     public boolean isAlreadyParsed() {
